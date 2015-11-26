@@ -432,7 +432,31 @@ EOF;
 								});";
 					break;
 				
-				case 'multiple-image':
+				case 'multiple_image':
+					$html[$value['fields']]['text'] = $value['label_fields'];
+					$html[$value['fields']]['html'] = '';
+					$html[$value['fields']]['style'] = 'style="background:none!important;"';
+					$html[$value['fields']]['html'] .= '<div ngf-drop ngf-select class="drop-box" ng-model="'.$value['fields'].'"  ngf-drag-over-class="\'dragover\'" ngf-multiple="true"   ngf-pattern="\'image/*,application/pdf\'">把图片拖到这儿来</div> <div ngf-no-file-drop>你的浏览器不支持拖拽,不要用了吧!</div>';
+					$html[$value['fields']]['html'] .= <<< PREVIEW
+						<p ng-repeat="img in article.$value[fields]">
+							<img src="{{img}}" width="100" alt="" /> <button ng-click="drop_$value[fields]_item(\$index)">删除</button>
+						</p>
+PREVIEW;
+					$code[] = " if (typeof NG.article.$value[fields] != 'undefined' && NG.article.$value[fields]) {  NG.article.$value[fields] = NG.article.$value[fields].split(','); console.log(NG.article); } else { NG.article.$value[fields] = [];} ";
+					$code[] = <<< JAVASCRIPT
+							 NG.\$watch('$value[fields]', function () {
+								NG.article.$value[fields] = NG.article.$value[fields] || [];
+								upload.uploadFile('/Backend/common/upload_image', NG.$value[fields], NG, function(NG, data) {
+								   Array.prototype.push.call(NG.article.$value[fields], data.data.relative_path + data.data.file_name)
+							   });
+							});
+							
+							NG.drop_$value[fields]_item = function(index) {
+								var temp = NG.article.$value[fields];
+								deleteFile.doIt(temp[index]);
+								NG.article.$value[fields].splice(index,1);
+							}
+JAVASCRIPT;
 					break;
 			}
 		}

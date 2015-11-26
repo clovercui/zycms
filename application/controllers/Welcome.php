@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+use Gregwar\Captcha\CaptchaBuilder;
 
 class Welcome extends FRONT_Controller {
 	
@@ -10,7 +11,9 @@ class Welcome extends FRONT_Controller {
 	
 	public function index() {
 
-		echo $this->twig->render('index.php');
+		$builder = new CaptchaBuilder;
+		$html =  $builder->inline(); 
+		echo "<img src='$html' />";
 	}
 	
 	public function test() {

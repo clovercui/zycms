@@ -1121,7 +1121,7 @@ Module.controller('exportCtrl', function($http, $scope, Upload, List, $compile) 
 	List.getAllColumn(NG);
 })
 
-Module.controller('documentCtrl', function($http, $scope, upload, List, sort, $compile) {
+Module.controller('documentCtrl', function($http, $scope, upload, List, sort, $compile, deleteFile) {
 	var NG = $scope;
 	NG.delayRelease = 0;
 	
@@ -3990,6 +3990,22 @@ Module.service('List', function($http) {
 	
 	return obj;
 });
+
+Module.service('deleteFile', function($http) {
+	var obj = {
+		doIt:function(data, NG, callback) {
+			callback = callback || function() {};
+			data = {path:data};
+			$http.post(RootPath + "Backend/common/delete_file", data).success(function(result) {
+				if(result.code == 200 ) {
+					(callback)(result.data);
+				}
+			});
+		},
+	};
+	
+	return obj;
+})
 
 Module.service('template', function($http) {
 	var obj = {

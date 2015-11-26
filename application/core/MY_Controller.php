@@ -111,13 +111,6 @@ class FRONT_Controller extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		Twig_Autoloader::register();
-
-		$loader = new Twig_Loader_Filesystem(APPPATH . '/views/'.config_item('front'));
-		$this->twig = new Twig_Environment($loader, array(
-			'debug' => true,
-			'cache' => APPPATH . '/views/'.config_item('front').'/caches',
-		));
 	}
 	
 	public function view($view, $vars = array(), $string=false)

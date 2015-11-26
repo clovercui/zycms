@@ -317,7 +317,8 @@ class Channel extends Admin_Controller {
 			case 'select':
 			case 'file':
 			case 'image':
-			case 'multiple-image':
+			default:
+			case 'multiple_image':
 				$struct['type'] = 'VARCHAR';
 				$struct['constraint'] = '255';
 				break;
