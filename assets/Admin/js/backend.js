@@ -1125,6 +1125,8 @@ Module.controller('documentCtrl', function($http, $scope, upload, List, sort, $c
 	var NG = $scope;
 	NG.delayRelease = 0;
 	
+	NG.callbacks = [];
+	
 	NG.article = {'sort':50, 'author':'admin', 'source':'原创', 'seo_title':'', 'seo_description':'', 'seo_keywords':'', 'tag':'', 'delay_time':0};
 	
 	NG.documentId = window.location.hash.substring(1);
@@ -1206,6 +1208,11 @@ Module.controller('documentCtrl', function($http, $scope, upload, List, sort, $c
 				if(result.code == 200 ) {
 					generate({"text":result.message, "type":"success"});
 					NG.article = {'sort':50, 'author':'admin', 'source':'原创', 'seo_title':'', 'seo_description':'', 'seo_keywords':'', 'tag':''};
+					NG.files = [];
+					for (var i in NG.callbacks) {
+						(NG.callbacks[i])();
+					}
+					NG.callbacks = [];
 					$('.newItem').remove();
 				} else {
 					generate({"text":result.message, "type":"error"});

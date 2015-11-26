@@ -229,7 +229,22 @@ class Document extends Admin_Controller {
 			$response_data['message'] = '非法的ID';
 		}
 		
+		$row = $this->archives_model->get_one($data['id']);
+		$column = $this->column_model->get_one($row['cid']);
+		$channel = $this->channel_model->get_one($column['channel_id']);
+		$table_struct = unserialize($channel['table_struct']);
 		$sub_archives_table = $this->get_additional_table($data['id']);
+		$sub_archive = $this->db->where("id=$data[id]")->get($sub_archives_table)->row_array();
+		foreach ($table_struct as $key=>$value) {
+			if ($value['channel_type'] == 'multiple_image') {
+				$temps = explode(',', $sub_archive[$value['fields']]);
+				foreach ($temps as $path) {
+					@unlink('.'. $path);
+				}
+			} elseif ($value['channel_type'] == 'image') {
+				@unlink('.'. $sub_archive[$value['fields']]);
+			}
+		}
 		
 		$finally = isset($data['finally']) ? $data['finally'] : '';
 		
@@ -442,13 +457,19 @@ EOF;
 							<img src="{{img}}" width="100" alt="" /> <button ng-click="drop_$value[fields]_item(\$index)">删除</button>
 						</p>
 PREVIEW;
-					$code[] = " if (typeof NG.article.$value[fields] != 'undefined' && NG.article.$value[fields]) {  NG.article.$value[fields] = NG.article.$value[fields].split(','); console.log(NG.article); } else { NG.article.$value[fields] = [];} ";
+					$code[] = " if (typeof NG.article.$value[fields] != 'undefined' && NG.article.$value[fields]) {  NG.article.$value[fields] = String.prototype.split.call(NG.article.$value[fields], ','); console.log(NG.article); } else { NG.article.$value[fields] = [];} ";
 					$code[] = <<< JAVASCRIPT
-							 NG.\$watch('$value[fields]', function () {
+							
+							var unBindWatch_$value[fields] = NG.\$watch('$value[fields]', function () {
 								NG.article.$value[fields] = NG.article.$value[fields] || [];
 								upload.uploadFile('/Backend/common/upload_image', NG.$value[fields], NG, function(NG, data) {
 								   Array.prototype.push.call(NG.article.$value[fields], data.data.relative_path + data.data.file_name)
 							   });
+							});
+							
+							NG.callbacks.push(function() {
+								NG.$value[fields] = null;
+								unBindWatch_$value[fields]();
 							});
 							
 							NG.drop_$value[fields]_item = function(index) {
