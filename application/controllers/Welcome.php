@@ -11,9 +11,7 @@ class Welcome extends FRONT_Controller {
 	
 	public function index() {
 
-		$builder = new CaptchaBuilder;
-		$html =  $builder->inline(); 
-		echo "<img src='$html' />";
+		$this->api->get_articles(3);
 	}
 	
 	public function test() {

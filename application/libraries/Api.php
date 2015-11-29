@@ -170,11 +170,17 @@ class Api
 	 */
 	public function get_articles($cid, $flag = '', $page=1, $page_length=12, $search_arr=array(), $order_arr=array())
 	{
-		$table_name = $this->get_table_by_column($cid);
-		
-		$arr_column = $this->CI->mycategory->set_model('column_model')->get_sub_category($cid);
+		if ($cid == 0) {
+			$arr_column = $this->CI->mycategory->set_model('column_model')->get_category_hash($cid);
+			$arr_column = array_column($arr_column, 'id');
+			$cid = $arr_column[0];
+		} else {
+			$arr_column = $this->CI->mycategory->set_model('column_model')->get_sub_category($cid);
+		}
 		
 		$ids = implode(',', $arr_column);
+		
+		$table_name = $this->get_table_by_column($cid);
 		
 		if (empty($table_name)) {
 			return FALSE;
@@ -251,11 +257,17 @@ class Api
 	 */
 	public function get_pages($cid, $flag = '', $page=1, $page_length=12, $search_arr=array())
 	{
-		$table_name = $this->get_table_by_column($cid);
-		
-		$arr_column = $this->CI->mycategory->set_model('column_model')->get_sub_category($cid);
+		if ($cid == 0) {
+			$arr_column = $this->CI->mycategory->set_model('column_model')->get_category_hash($cid);
+			$arr_column = array_column($arr_column, 'id');
+			$cid = $arr_column[0];
+		} else {
+			$arr_column = $this->CI->mycategory->set_model('column_model')->get_sub_category($cid);
+		}
 		
 		$ids = implode(',', $arr_column);
+		
+		$table_name = $this->get_table_by_column($cid);
 		
 		if (empty($table_name)) {
 			return FALSE;
