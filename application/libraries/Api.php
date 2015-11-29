@@ -174,6 +174,7 @@ class Api
 			$arr_column = $this->CI->mycategory->set_model('column_model')->get_category_hash($cid);
 			$arr_column = array_column($arr_column, 'id');
 			$cid = $arr_column[0];
+			$queryAll = true;
 		} else {
 			$arr_column = $this->CI->mycategory->set_model('column_model')->get_sub_category($cid);
 		}
@@ -209,7 +210,7 @@ class Api
 			if (is_array($search_arr) && !empty($search_arr)) {
 				$where .= " AND (";
 				foreach ($search_arr as $field=>$value) {
-					$field == 'title' ? ($where .= " ac.{$field} like '%$value%' $relationship ") : ($where .= " a.{$field} like '%$value%'  $relationship ");
+					$field == 'title' ? ($where .= " ac.{$field} like '%$value%' $relationship ") : ($where .=  (isset($queryAll) ? '' : " a.{$field} like '%$value%'  $relationship "));
 				}
 				$where = rtrim($where, "$relationship ");
 				$where .= ")";
@@ -221,16 +222,16 @@ class Api
 				if (in_array($order_arr['field'], array('id', 'sort', 'click_count'))) {
 					$order_str = "ac.{$order_arr['field']} $order_arr[way]";
 				} else {
-					$order_str = "a.{$order_arr['field']} $order_arr[way]";
+					$order_str = isset($queryAll) ? '' : "a.{$order_arr['field']} $order_arr[way]";
 				}
 			}
 			
 			$archives_table = $this->CI->db->dbprefix('archives');
 			$table_name = $this->CI->db->dbprefix($table_name);
-			$sql = "SELECT * FROM $archives_table AS ac 
-					 LEFT JOIN $table_name AS a 
-					 ON ac.id=a.id  
-					 WHERE $where 
+			$sql = "SELECT * FROM $archives_table AS ac " .
+					(isset($queryAll) ? '' : " LEFT JOIN $table_name AS a 
+					 ON ac.id=a.id  ") . 
+					" WHERE $where 
 					 ORDER BY $order_str 
 					 LIMIT " . ($page - 1) * $page_length . "
 					 , " . $page_length;
@@ -261,6 +262,7 @@ class Api
 			$arr_column = $this->CI->mycategory->set_model('column_model')->get_category_hash($cid);
 			$arr_column = array_column($arr_column, 'id');
 			$cid = $arr_column[0];
+			$queryAll = true;
 		} else {
 			$arr_column = $this->CI->mycategory->set_model('column_model')->get_sub_category($cid);
 		}
@@ -297,7 +299,7 @@ class Api
 			if (is_array($search_arr) && !empty($search_arr)) {
 				$where .= " AND (";
 				foreach ($search_arr as $field=>$value) {
-					$field == 'title' ? ($where .= " ac.{$field} like '%$value%' $relationship ") : ($where .= " a.{$field} like '%$value%'  $relationship ");
+					$field == 'title' ? ($where .= " ac.{$field} like '%$value%' $relationship ") : ($where .=  (isset($queryAll) ? '' : " a.{$field} like '%$value%'  $relationship "));
 				}
 				$where = rtrim($where, "$relationship ");
 				$where .= ")";
@@ -305,10 +307,10 @@ class Api
 			
 			$archives_table = $this->CI->db->dbprefix('archives');
 			$table_name = $this->CI->db->dbprefix($table_name);
-			$sql = "SELECT * FROM $archives_table AS ac 
-					 LEFT JOIN $table_name AS a 
-					 ON ac.id=a.id  
-					 WHERE $where ";
+			$sql = "SELECT * FROM $archives_table AS ac " .
+					 (isset($queryAll) ? '' : " LEFT JOIN $table_name AS a 
+					 ON ac.id=a.id  ") . 
+					 " WHERE $where ";
 			
 			$total_count = $this->CI->db->query($sql)->num_rows();
 			

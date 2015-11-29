@@ -11,7 +11,7 @@ class Welcome extends FRONT_Controller {
 	
 	public function index() {
 
-		$this->api->get_articles(3);
+		print_r($this->api->get_articles(0));
 	}
 	
 	public function test() {
