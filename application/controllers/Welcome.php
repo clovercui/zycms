@@ -11,7 +11,10 @@ class Welcome extends FRONT_Controller {
 	
 	public function index() {
 
-		print_r($this->api->get_articles(0));
+		echo <<< HTML
+			<h1>Welcome to zycms!</h1>
+			<h2><a href="/admin">去后台</a></h2>
+HTML;
 	}
 	
 	public function test() {
