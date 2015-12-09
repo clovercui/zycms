@@ -252,7 +252,7 @@ class Build_html extends Admin_Controller {
 					)
 				))));
 			} else {
-				die(json_encode(array('code'=>200, 'message'=>"第 $key 批生成成功<br />", 'data'=>array(
+				die(json_encode(array('code'=>201, 'message'=>"第 $key 批生成成功<br />", 'data'=>array(
 						'columns' => $columns,
 						'key' => ++$key
 				))));
