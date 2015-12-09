@@ -3497,11 +3497,16 @@ Module.controller('buildHtmlCtrl', function($scope, $http, List) {
 	NG.buildSingleHtml = function(id) {
 		var data = {id:id};
 		$http.post(RootPath + 'Backend/build_html/build_single_html',data).success(function(result) {
-				
+			NG.maskAndNoticeBoxShow();
 			if(result.code == 200 ) {
 				generate({"text":result.message, "type":"success"});
+				NG.maskHide();
+			} else if (result.code == 202) {
+				$('<span>'+result.message+'</span>').appendTo('#noticeBox');
+				NG.childProcess(result.data);
 			} else {
 				generate({"text":result.message, "type":"error"});
+				NG.maskHide();
 			}
 		});
 	}
@@ -3523,6 +3528,9 @@ Module.controller('buildHtmlCtrl', function($scope, $http, List) {
 				
 			if(result.code == 200 ) {
 				generate({"text":result.message, "type":"success"});
+			} else if (result.code == 202) {
+				$('<span>'+result.message+'</span>').appendTo('#noticeBox');
+				NG.childProcess(result.data);
 			} else if (result.code == 201) {
 				$('<span>'+result.message+'</span>').appendTo('#noticeBox');
 				NG.asynBuildHtml(result.data);
@@ -3552,7 +3560,10 @@ Module.controller('buildHtmlCtrl', function($scope, $http, List) {
 	
 	NG.childProcess = function(data) {
 		$http.post(data.url, data.data).success(function(result) {
-			if(result.code == 201) {
+			if (result.code == 200) {
+				generate({"text":result.message, "type":"success"});
+				NG.maskHide();
+			} else if (result.code == 201) {
 				$('<span>'+result.message+'</span>').appendTo('#noticeBox');
 				NG.asynBuildHtml(result.data);
 			} else if (result.code == 202) {
