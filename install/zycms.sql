@@ -4025,6 +4025,39 @@ CREATE TABLE IF NOT EXISTS `zycms_rule` (
 --
 
 --
+-- 表的结构 `zycms_tongji`
+--
+
+CREATE TABLE IF NOT EXISTS `zycms_tongji` (
+  `id` int(10) unsigned NOT NULL,
+  `user_agent` varchar(255) NOT NULL COMMENT '用户代理(什么浏览器)',
+  `ip` int(11) NOT NULL COMMENT 'ip地址',
+  `date` date NOT NULL COMMENT '访问时间',
+  `referer` varchar(255) NOT NULL COMMENT '访问网站来源'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='统计表';
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `zycms_tongji`
+--
+ALTER TABLE `zycms_tongji`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `zycms_tongji`
+--
+ALTER TABLE `zycms_tongji`
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+
+
+--
 -- Indexes for table `zycms_ad`
 --
 ALTER TABLE `zycms_ad`
