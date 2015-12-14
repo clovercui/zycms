@@ -675,6 +675,7 @@ Module.controller('columnCtrl', function($scope, $http, upload, List, sort) {
 				if(result.code == 200 ) {
 					generate({'text':result.message, "type":'success'});
 					NG.column = {};
+					NG.columnId = false;
 					List.getAllColumn(NG);
 					NG.is_delete = 0;
 					
