@@ -131,6 +131,16 @@
       <td>&nbsp;</td>
     </tr>
    
+   <tr>
+      <td>&nbsp;</td>
+      <td align="right"><span class="red"></span>级联更改子栏目规则</td>
+      <td>&nbsp;</td>
+      <td class="okinput k1" style="background:none!important;">
+		<input type="checkbox" ng-model="column.cascading" ng-true-value="1" />
+	  </td>
+      <td>&nbsp;</td>
+    </tr>
+   
   </table>
   
   
