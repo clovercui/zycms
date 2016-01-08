@@ -131,7 +131,7 @@
       <td>&nbsp;</td>
     </tr>
    
-   <tr>
+   <tr ng-show="columnId">
       <td>&nbsp;</td>
       <td align="right"><span class="red"></span>级联更改子栏目规则</td>
       <td>&nbsp;</td>
