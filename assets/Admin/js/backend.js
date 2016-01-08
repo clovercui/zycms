@@ -632,7 +632,7 @@ Module.controller('columnCtrl', function($scope, $http, upload, List, sort) {
 	
 	
 	NG.addColumn = function() {
-		$.extend(NG.column, {"is_add":1});
+		$.extend(NG.column, {"is_add":1, "rule_type":2});
 		NG.saveColumn();
 	}
 	

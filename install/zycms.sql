@@ -3655,6 +3655,7 @@ CREATE TABLE IF NOT EXISTS `zycms_column` (
   `channel_id` int(10) unsigned NOT NULL COMMENT '模型ID',
   `pid` int(10) unsigned NOT NULL COMMENT '父栏目ID',
   `column_thumb` varchar(255) NOT NULL COMMENT '栏目图片',
+  `rule_type` varchar(255) NOT NULL COMMENT '规则类型',
   `summary` text NOT NULL COMMENT '栏目摘要',
   `seo_title` varchar(255) NOT NULL COMMENT 'SEO标题',
   `seo_keywords` varchar(1024) NOT NULL COMMENT 'SEO关键词',
