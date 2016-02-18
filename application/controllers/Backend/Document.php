@@ -158,11 +158,18 @@ class Document extends Admin_Controller {
 			
 		if ($row = $this->column_model->get_one($data['cid'])) {
 			
+			$target_cid = $data['cid'];
 			$row = $this->channel_model->get_one($row['channel_id']);
 			
 			$table_name = $row['table_name'];
 			
 			if ($is_edit) {
+				$org_article = $this->archives_model->get_one($data['id']);
+				if ($this->_get_channel_type($target_cid) != $this->_get_channel_type($org_article['cid'])) {
+					$response_data['code'] = 403;
+					$response_data['message'] = '新栏目的内容模型必须与原栏目的内容模型一致';
+					die(json_encode($response_data));
+				}
 				$this->edit($archives_data_struct, $sub_archives_data_struct, $table_name, $data['id']);
 			} else {
 				$this->add($archives_data_struct, $sub_archives_data_struct, $table_name);
@@ -576,6 +583,12 @@ EOF;
 			$response_data['message'] = '不存在的文章';
 		}
 		die(json_encode($response_data));
+	}
+
+	private function _get_channel_type($cid)
+	{
+		$column = $this->column_model->get_one($cid);
+		return $column['channel_id'];
 	}
 	
 }
