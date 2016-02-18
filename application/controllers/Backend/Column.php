@@ -134,14 +134,19 @@ class Column extends Admin_Controller {
 	
 	public function column_edit($data) 
 	{
+		$column = $this->column_model->get_one($data['id']);
+		if ($this->archives_model->is_exists("cid=$data[id]") && $data['channel_id'] != $column['channel_id']) {
+			$response_data['code'] = 403;
+			$response_data['message'] = '更改失败, 请先删除该栏目下的文章并清空回收站';
+			die(json_encode($response_data));
+		}
 		//入库之前判断是否更换过图片
 		if ($row = $this->column_model->get_one($data['id'])) {
 			if ( $row['column_thumb'] != $data['column_thumb']) {
 				@unlink('.'.$row['column_thumb']);
 			}
-			
 		}
-		
+				
 		$rules = '';
 		if (isset($data['rules'])) {
 			$rules = $data['rules'];
