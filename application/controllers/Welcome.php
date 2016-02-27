@@ -10,8 +10,9 @@ class Welcome extends FRONT_Controller {
 	}
 	
 	public function index() {
-
+		$srcPath = thumbnail('/uploads/2016/02/24/de47d7a59f2b493663d8c8e0bbeb558b.jpg', 50, 50);
 		echo <<< HTML
+			<img src="$srcPath" />
 			<h1>Welcome to zycms!</h1>
 			<h2><a href="/admin">去后台</a></h2>
 HTML;
