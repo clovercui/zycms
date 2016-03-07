@@ -49,8 +49,11 @@
 		
 		
 		<button class="button" ngf-select ng-model="files">上传</button>
+    
 	  </td>
-      <td><div id="process" style="width:200px; height:12px; border:1px solid #ccc; padding:0; position:relative; display:none;"><span style="width:10%; height:100%; display:inline-block; background:green; margin:0; position:absolute; "></span></div>
+      <td>
+      <imageselect ng-model="article.thumb"></imageselect>
+      <div id="process" style="width:200px; height:12px; border:1px solid #ccc; padding:0; position:relative; display:none;"><span style="width:10%; height:100%; display:inline-block; background:green; margin:0; position:absolute; "></span></div>
 		
 		<img ng-show="article.thumb" ng-model="article.thumb" id="fullPath" src="{{article.thumb}}"  alt="" width="80" /></td>
     </tr>
@@ -181,3 +184,4 @@
 	
 
 </div>
+

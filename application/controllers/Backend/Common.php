@@ -128,5 +128,28 @@ class Common extends Admin_Controller {
 		return $temp['water_mark'];
 		
 	}
+
+	public function GetFiles()
+	{
+		$data = $this->input->post();
+		$folder = $data['baseDir'];
+		$files = array();
+		$iterator = new \DirectoryIterator ($folder);
+		foreach ($iterator as $info) {
+			if (!$info->isDot()) {
+				if ($info->isFile()) {
+					if (mb_detect_encoding($info->__toString(), 'UTF8')) {
+						$files['files'][] = $info->__toString();
+					}
+				} else {
+					$files['directories'][] = $info->__toString();
+				}
+				
+			}
+		}
+		die(json_encode(array(
+			'files' => $files
+		)));
+	}
 	
 }

@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>朝阳CMS</title>
 	<link rel="stylesheet" href="<?=base_url('assets/Admin/css/reset.css')?>" type="text/css" />
+	<link rel="stylesheet" href="<?=base_url('assets/Admin/css/jquery.image-select.css')?>" type="text/css" />
 	<link rel="stylesheet" href="<?=base_url('assets/Admin/css/style.css')?>" type="text/css" />
 	<link rel="stylesheet" href="<?=base_url('assets/Admin/css/common.css')?>" type="text/css" />
 	<link rel="stylesheet" href="<?=base_url('assets/Admin/css/loading-bar.css')?>" type="text/css" />
@@ -12,6 +13,7 @@
 	<link rel="stylesheet" href="<?=base_url('assets/Admin/css/ui-dialog.css')?>" type="text/css" />
 	<script type="text/javascript" src="<?=base_url('assets/Admin/js/angular.js')?>"></script>
 	<script type="text/javascript" src="<?=base_url('assets/Admin/js/jquery-1.10.2.min.js')?>"></script>
+	<script type="text/javascript" src="<?=base_url('assets/Admin/js/jquery.image-select.js')?>"></script>
 	<script type="text/javascript" src="<?=base_url('assets/Admin/js/jquery.cookie.js')?>"></script>
 	<script type="text/javascript" src="<?=base_url('assets/Admin/js/jquery.noty.packaged.min.js')?>"></script>
 	<script type="text/javascript" src="<?=base_url('assets/Admin/js/common.js')?>"></script>
