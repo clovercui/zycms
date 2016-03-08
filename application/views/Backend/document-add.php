@@ -49,9 +49,11 @@
 		
 		
 		<button class="button" ngf-select ng-model="files">上传</button>
+
     
 	  </td>
       <td>
+      <button class="button" ng-click="article.thumb=''">删除</button>
       <imageselect ng-model="article.thumb"></imageselect>
       <div id="process" style="width:200px; height:12px; border:1px solid #ccc; padding:0; position:relative; display:none;"><span style="width:10%; height:100%; display:inline-block; background:green; margin:0; position:absolute; "></span></div>
 		
